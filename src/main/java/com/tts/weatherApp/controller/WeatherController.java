@@ -13,26 +13,21 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class WeatherController {
-
     @Autowired
     private WeatherService weatherService;
 
-    @GetMapping ("/")
+    @GetMapping
     public String getIndex(Model model) {
-//        Response response = weatherService.getForecast("43220");
-//        model.addAttribute("data", response);
         model.addAttribute("request", new Request());
+        model.addAttribute("recentSearches", weatherService.getRecentSearches());
         return "index";
     }
-    @PostMapping ("/")
+
+    @PostMapping
     public String postIndex(Request request, Model model) {
         Response data = weatherService.getForecast(request.getZipCode());
         model.addAttribute("data", data);
         return "index";
     }
-
-
-
-
 
 }
